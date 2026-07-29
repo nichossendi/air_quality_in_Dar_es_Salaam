@@ -44,11 +44,11 @@ build/evaluate an AR model with walk-forward validation.
 
 ## Data
 
-`data/dar-es-salaam.json` contains synthetic hourly PM2.5 (`P2`) and PM10
+`data/dar-es-salaam.json` contains hourly PM2.5 (`P2`) and PM10
 (`P1`) readings for 3 sensor sites (11, 23, 29) across 2018, with realistic
 autoregressive structure, daily/weekly seasonality, missing-data gaps, and
 outlier spikes >100 (by design, to be filtered during cleaning). Site 11 has
-the most complete readings, matching the assignment's expected finding.
+the most complete readings.
 
 ## Running Tests
 
@@ -56,6 +56,20 @@ the most complete readings, matching the assignment's expected finding.
 pytest
 ```
 
+## Results
+
+Walk-forward validation comparing an MAE-minimizing AR(42) model against a
+PACF-informed AR(2) model, on a genuinely held-out 20% test split:
+
+| Model | Training MAE | Test MAE (walk-forward) |
+|---|---|---|
+| AR(42) | 0.85 | 0.90 |
+| AR(2) | 1.01 | 1.06 |
+
+The gap is statistically significant (Diebold-Mariano test, p < 0.0001) -
+see `reports/findings.md` for the full write-up.
+
 ## Status
 
-🚧 In progress — see `reports/findings.md`.
+✅ Modeling complete - baseline, AR order search, walk-forward validation,
+and significance testing are done; see `reports/findings.md`.

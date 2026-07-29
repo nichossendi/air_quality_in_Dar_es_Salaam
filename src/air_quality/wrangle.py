@@ -70,5 +70,9 @@ def get_site_reading_counts(collection: Collection) -> list[dict]:
     committing to a single site in wrangle().
     """
     
-    # TODO: implement via an aggregation pipeline
-    raise NotImplementedError
+    pipeline = [
+        {"$group": {"_id": "$metadata.site", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+    ]
+
+    return list(collection.aggregate(pipeline))
