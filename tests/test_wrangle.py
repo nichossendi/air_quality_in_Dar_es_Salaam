@@ -4,6 +4,7 @@ Requires a local MongoDB seeded via scripts/seed_mongo.py before running.
 """
 
 import pytest
+import pandas as pd
 from pymongo import MongoClient
 
 from air_quality.wrangle import wrangle
